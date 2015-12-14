@@ -1,4 +1,4 @@
-import {SET_STATE, SELECT_CARD, SCOOP_CARD} from './actions.js';
+import {SET_STATE, DISCARD, SELECT_CARD, SCOOP_CARD} from './actions.js';
 import {Map} from 'immutable';
 
 function selectCard(state, cardIndex){
@@ -16,15 +16,21 @@ function scoopCard(state, cardIndex){
             }
     );
 }
+
+function discardSelectedCard(state){
+    return state.set('selectedCard', null);
+}
 export default function reducer(state=Map(), action){
     console.log(action);
     switch(action.type){
         case SET_STATE:
-            return state.merge({cardsToScoop: []}, action.payload.state);
+            return state.merge({selectedCard: null, cardsToScoop: []}, action.payload.state);
         case SELECT_CARD:
             return selectCard(state, action.payload.card);
         case SCOOP_CARD:
             return scoopCard(state, action.payload.card);
+        case DISCARD:
+            return discardSelectedCard(state);
     }
     return state;
 }

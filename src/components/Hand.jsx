@@ -8,7 +8,7 @@ export const Hand = React.createClass({
         return this.props.cards || [];
     },
     render: function() {
-        return <div className="table">
+        return <div className="hand">
         {this.getCards().map(
                 (entry,index)=>{
                     return (<Card 

@@ -1,4 +1,4 @@
-import {SET_STATE, SCOOP_CARD, SELECT_CARD} from './actions.js';
+import {SET_STATE, SCOOP_CARD, SELECT_CARD, DISCARD} from './actions.js';
 export function scoop(card) {
       return {
           type: SCOOP_CARD, 
@@ -28,4 +28,32 @@ export function setState(state){
             state: state
         }
     };
+}
+
+export function discard(card){
+    if(card !== null){
+        return {
+            type: DISCARD,
+            meta: {remote: true},
+            payload: {
+                player: 0,
+                card: card
+            }
+        }
+    } else {
+        return {
+            type: "NOP",
+            meta: {remote: false}
+        }
+    }
+}
+
+export function nextHand(){
+    return {
+        type: "DEAL_PLAYERS",
+        meta: {remote: true},
+        payload: {
+            numPlayers: 2
+        }
+    }
 }
