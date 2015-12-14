@@ -11,7 +11,10 @@ export const Hand = React.createClass({
         return <div className="table">
         {this.getCards().map(
                 (entry,index)=>{
-                    return (<Card selected={this.props.selectedCard === index} 
+                    return (<Card 
+                            face={entry.get("face")} 
+                            suit={entry.get("suit")} 
+                            selected={this.props.selectedCard === index}
                     onClick={() => this.props.selectCard(index)}>{entry}</Card>);
                 }
                 )}
@@ -21,7 +24,7 @@ export const Hand = React.createClass({
 
 function mapStateToProps(state) {
     return {
-        cards: state.getIn(['hand']),
+        cards: state.getIn(['players', 0, 'hand']),
         selectedCard: state.get('selectedCard')
     };
 }

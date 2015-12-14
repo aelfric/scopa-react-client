@@ -6,7 +6,7 @@ import {createStore, applyMiddleware} from 'redux';
 import {SET_STATE} from './actions.js';
 import {Provider} from 'react-redux';
 import reducer from './reducer';
-import {scoop} from './action_creators.js';
+import {setState, scoop} from './action_creators.js';
 import io from 'socket.io-client';
 import remoteActionMiddleware from './remote-action-middleware.js';
 
@@ -33,12 +33,12 @@ const socket = io(`${location.protocol}//${location.hostname}:8090`);
     const store = createStoreWithMiddleware(reducer);
 socket.on('state', 
         state => {
-            store.dispatch({type: SET_STATE, payload: state});
+            store.dispatch(setState(state));
             console.log(state);
         });
 
-socket.emit("action", {type: "NEW_DECK"});
 socket.emit("action", {type: "SHUFFLE"});
+socket.emit("action", {type: "DEAL_PLAYERS", payload: {numPlayers: 2}});
 socket.emit("action", {type: "DEAL_TABLE"});
 
 ReactDOM.render(

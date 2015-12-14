@@ -17,9 +17,10 @@ function scoopCard(state, cardIndex){
     );
 }
 export default function reducer(state=Map(), action){
+    console.log(action);
     switch(action.type){
         case SET_STATE:
-            return state.merge(action.payload.state);
+            return state.merge({cardsToScoop: []}, action.payload.state);
         case SELECT_CARD:
             return selectCard(state, action.payload.card);
         case SCOOP_CARD:
